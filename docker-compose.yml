@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: photo_gallery_db
+    environment:
+      POSTGRES_USER: photouser
+      POSTGRES_PASSWORD: photopass123
+      POSTGRES_DB: photogallery
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U photouser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: photo_gallery_backend
+    environment:
+      DATABASE_URL: postgresql://photouser:photopass123@db:5432/photogallery
+      JWT_SECRET_KEY: change-this-to-a-random-secret-key-in-production
+      FLASK_ENV: development
+    volumes:
+      - ./backend:/app
+      - upload_data:/app/uploads
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: photo_gallery_frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - API_URL=http://localhost:5000
+    depends_on:
+      - backend
+    networks:
+      - app_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  upload_data:
+
+networks:
+  app_network:
+    driver: bridge
