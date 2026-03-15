@@ -25,7 +25,7 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', os.urandom(24).hex())
     
     # CORS
-    CORS_ORIGINS = os.getenv('CORS_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173').split(',')
+    CORS_ORIGINS = os.getenv('CORS_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173,https://frontend.gentleglacier-43da7a67.eastus.azurecontainerapps.io').split(',')
 
 class DevelopmentConfig(Config):
     """Development configuration"""

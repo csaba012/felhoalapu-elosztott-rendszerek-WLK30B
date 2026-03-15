@@ -1,32 +1,24 @@
 FROM python:3.11-slim
 
-# Set working directory
 WORKDIR /app
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
     postgresql-client \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better caching
 COPY requirements.txt .
-
-# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
 COPY . .
-
-# Create necessary directories
 RUN mkdir -p /app/uploads /app/logs
 
-# Set environment variables
 ENV PYTHONUNBUFFERED=1
 
-# Expose port
+# Azure Container Apps will route to whatever you set as targetPort (often 5000),
+# but binding to $PORT is safest.
 EXPOSE 5000
 
-# Run the application directly
-CMD ["python", "app.py"]
+# Use gunicorn and bind on all interfaces. Uses PORT if provided by platform.
+CMD ["sh", "-lc", "gunicorn -b 0.0.0.0:${PORT:-5000} app:app"]

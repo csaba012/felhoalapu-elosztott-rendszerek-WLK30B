@@ -36,7 +36,7 @@ defineEmits<{
 }>()
 
 const imageUrl = computed(() => {
-  return `${import.meta.env.API_URL || 'http://localhost:5000'}/uploads/${props.photo.filename}`
+  return `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/uploads/${props.photo.filename}`
 })
 
 const formattedDate = computed(() => {

@@ -6,7 +6,7 @@ services:
     container_name: photo_gallery_db
     environment:
       POSTGRES_USER: photouser
-      POSTGRES_PASSWORD: photopass123
+      POSTGRES_PASSWORD: Gallerypass123
       POSTGRES_DB: photogallery
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -52,7 +52,7 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - API_URL=http://localhost:5000
+      - VITE_API_URL=http://localhost:5000
     depends_on:
       - backend
     networks:

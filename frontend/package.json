@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
       "dev": "vite",
-      "build": "vue-tsc && vite build",
+      "typecheck": "vue-tsc",
+      "build": "vite build",
       "preview": "vite preview"
     },
     "dependencies": {
