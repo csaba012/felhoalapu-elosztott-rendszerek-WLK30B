@@ -85,6 +85,7 @@
             </collectionProp>
           </elementProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <stringProp name="HTTPSampler.domain">${BACKEND_HOST}</stringProp>
           <stringProp name="HTTPSampler.path">/auth/register</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
         </HTTPSamplerProxy>
@@ -109,6 +110,7 @@
             </collectionProp>
           </elementProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <stringProp name="HTTPSampler.domain">${BACKEND_HOST}</stringProp>
           <stringProp name="HTTPSampler.path">/auth/login</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
         </HTTPSamplerProxy>
@@ -139,6 +141,7 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST Upload Photo" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments"><collectionProp name="Arguments.arguments"><elementProp name="name" elementType="HTTPArgument"><stringProp name="Argument.name">name</stringProp><stringProp name="Argument.value">LoadTest-${email}</stringProp><stringProp name="Argument.metadata">=</stringProp></elementProp></collectionProp></elementProp>
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs"><collectionProp name="HTTPFileArgs.files"><elementProp name="file" elementType="HTTPFileArg"><stringProp name="File.path">${UPLOAD_FILE}</stringProp><stringProp name="File.paramname">image</stringProp><stringProp name="File.mimetype">image/jpeg</stringProp></elementProp></collectionProp></elementProp>
+          <stringProp name="HTTPSampler.domain">${BACKEND_HOST}</stringProp>
           <stringProp name="HTTPSampler.path">/photos</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
         </HTTPSamplerProxy>
